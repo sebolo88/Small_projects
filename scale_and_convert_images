@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+from PIL import Image
+import os, sys
+source_directory= os.getcwd()+'/images'
+target_directory= '/opt/icons/'
+target_size = (128,128)
+target_rotation = 270
+
+def scale_rotate_convert_images (source_dir, target_dir, size, rotation):
+  """
+  function will scale, rotate and convert to JPEG files in selected directory
+  """
+  for file in os.listdir(source_dir):
+    name, extension = os.path.splitext(file)
+    output_file = target_dir + name
+    try:
+      with Image.open(source_dir+'/'+file) as image:
+        image.resize(size).rotate(rotation).convert('RGB').save(output_file,"JPEG")
+    except IOError:
+      print("cannot convert", file)
